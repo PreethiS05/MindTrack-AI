@@ -6,7 +6,7 @@
 
 ## ✨ Live Demo
 
-Check out the live app: [MindTrack AI]([https://mindtrack-ai.streamlit.app](https://mindtrack-ai-ig9po7dhptw4rs4dcwcq9p.streamlit.app/))
+Check out the live app: [MindTrack AI]([https://mindtrack-ai-ig9po7dhptw4rs4dcwcq9p.streamlit.app/))
 
 ## 📸 Screenshots
 
