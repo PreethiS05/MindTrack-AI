@@ -1,12 +1,12 @@
 # 🧠 MindTrack AI - Your Intelligent Wellness Companion
 
-[![Streamlit App]((mindtrack-ai-ig9po7dhptw4rs4dcwcq9p))
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://mindtrack-ai-ig9po7dhptw4rs4dcwcq9p.streamlit.app)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-## ✨ Live Demo
+## 🚀 Live Demo
 
-Check out the live app:http://localhost:8501/
+Try MindTrack AI here: [https://mindtrack-ai-ig9po7dhptw4rs4dcwcq9p.streamlit.app](https://mindtrack-ai-ig9po7dhptw4rs4dcwcq9p.streamlit.app)
 
 ## 🎯 Features
 
@@ -39,5 +39,3 @@ Check out the live app:http://localhost:8501/
 - Mood pattern analysis
 - Habit completion rates
 - Achievement badges
-
-## 🏗️ Project Structure
