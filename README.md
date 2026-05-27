@@ -1,12 +1,12 @@
 # 🧠 MindTrack AI - Your Intelligent Wellness Companion
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://mindtrack-ai.streamlit.app)
+[![Streamlit App](https://mindtrack-ai-ig9po7dhptw4rs4dcwcq9p.streamlit.app/)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 ## ✨ Live Demo
 
-Check out the live app: [MindTrack AI](https://mindtrack-ai.streamlit.app)
+Check out the live app: [MindTrack AI]([https://mindtrack-ai.streamlit.app](https://mindtrack-ai-ig9po7dhptw4rs4dcwcq9p.streamlit.app/))
 
 ## 📸 Screenshots
 
