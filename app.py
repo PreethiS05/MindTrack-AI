@@ -9,6 +9,7 @@ import requests
 import random
 from streamlit_option_menu import option_menu
 import time
+import os
 
 # Page config must be first Streamlit command
 st.set_page_config(
@@ -19,14 +20,33 @@ st.set_page_config(
 )
 
 # ---------- OpenRouter API Setup ----------
-import streamlit as st
+# Define constants
+OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 
-api_key = st.secrets["OPENROUTER_API_KEY"]
+# Try to get API key from multiple sources
+api_key = None
 
-if api_key and api_key != "your-openrouter-key-here":
+# Method 1: Streamlit secrets (for deployment)
+try:
+    api_key = st.secrets.get("OPENROUTER_API_KEY")
+except:
+    pass
+
+# Method 2: Environment variable (for local development)
+if not api_key:
+    api_key = os.getenv("OPENROUTER_API_KEY")
+
+# Method 3: Hardcoded for testing (remove in production)
+# Only use if others fail - NEVER commit this to GitHub!
+if not api_key:
+    # api_key = "your-key-here"  # Uncomment for testing only
+    pass
+
+if api_key:
     ai_available = True
 else:
     ai_available = False
+    st.warning("⚠️ OpenRouter API key not found. AI features will be limited. Please add your API key to .streamlit/secrets.toml")
 
 # ---------- Session State ----------
 if 'mood_history' not in st.session_state:
@@ -78,13 +98,13 @@ def check_achievements():
 
 # ---------- AI Functions ----------
 def call_openrouter(messages, model="openai/gpt-3.5-turbo", max_tokens=200):
-    if not ai_available:
+    if not ai_available or not api_key:
         return None
     
     headers = {
-        "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+        "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json",
-        "HTTP-Referer": "https://mindtrack-ai.local",
+        "HTTP-Referer": "https://mindtrack-ai.streamlit.app",
         "X-Title": "MindTrack AI"
     }
     
@@ -96,11 +116,12 @@ def call_openrouter(messages, model="openai/gpt-3.5-turbo", max_tokens=200):
     }
     
     try:
-        response = requests.post(OPENROUTER_URL, headers=headers, json=payload)
+        response = requests.post(OPENROUTER_URL, headers=headers, json=payload, timeout=30)
         response.raise_for_status()
         result = response.json()
         return result['choices'][0]['message']['content']
     except Exception as e:
+        print(f"API Error: {e}")
         return None
 
 def chat_with_ai(user_message):
@@ -306,62 +327,6 @@ st.markdown("""
     /* Progress bar styling */
     .stProgress > div > div {
         background: linear-gradient(135deg, #8b5cf6, #10a37f);
-    }
-    
-    /* Notification styling */
-    .notification {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        z-index: 1000;
-        animation: slideIn 0.5s ease;
-    }
-    
-    @keyframes slideIn {
-        from {
-            opacity: 0;
-            transform: translateX(100px);
-        }
-        to {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    }
-    
-    /* Scrollbar styling */
-    ::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
-    }
-    
-    ::-webkit-scrollbar-track {
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 10px;
-    }
-    
-    ::-webkit-scrollbar-thumb {
-        background: linear-gradient(135deg, #8b5cf6, #10a37f);
-        border-radius: 10px;
-    }
-    
-    /* Floating animation */
-    @keyframes float {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-10px); }
-    }
-    
-    .floating {
-        animation: float 3s ease-in-out infinite;
-    }
-    
-    /* Pulse animation for achievements */
-    @keyframes pulse {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.1); }
-    }
-    
-    .achievement-badge {
-        animation: pulse 0.5s ease;
     }
     
     /* Input field styling */
@@ -753,26 +718,22 @@ with tab_chat:
     st.markdown("### 🤖 Chat with MindTrack AI")
     st.markdown("*Your compassionate AI wellness companion, always here to listen*")
     
-    # Chat container with custom styling
-    chat_container = st.container()
-    
-    with chat_container:
-        # Display chat history
-        for message in st.session_state.messages:
-            if message["role"] == "user":
-                st.markdown(f"""
-                <div class="chat-message-user">
-                    <strong>You</strong><br>
-                    {message["content"]}
-                </div>
-                """, unsafe_allow_html=True)
-            else:
-                st.markdown(f"""
-                <div class="chat-message-assistant">
-                    <strong>🧠 MindTrack AI</strong><br>
-                    {message["content"]}
-                </div>
-                """, unsafe_allow_html=True)
+    # Display chat history
+    for message in st.session_state.messages:
+        if message["role"] == "user":
+            st.markdown(f"""
+            <div class="chat-message-user">
+                <strong>You</strong><br>
+                {message["content"]}
+            </div>
+            """, unsafe_allow_html=True)
+        else:
+            st.markdown(f"""
+            <div class="chat-message-assistant">
+                <strong>🧠 MindTrack AI</strong><br>
+                {message["content"]}
+            </div>
+            """, unsafe_allow_html=True)
     
     # Chat input
     if prompt := st.chat_input("How are you feeling? Share anything..."):
@@ -943,8 +904,3 @@ st.markdown("""
     <p style="font-size: 0.8em; opacity: 0.6;">Powered by OpenRouter AI | Making mental wellness accessible to all</p>
 </div>
 """, unsafe_allow_html=True)
-
-# Auto-refresh for notifications (optional - adds live feel)
-if st.session_state.notifications:
-    time.sleep(3)
-    st.rerun()
