@@ -1,18 +1,12 @@
 # 🧠 MindTrack AI - Your Intelligent Wellness Companion
 
-[![Streamlit App](https://mindtrack-ai-ig9po7dhptw4rs4dcwcq9p.streamlit.app/)
+[![Streamlit App]((http://localhost:8501/))
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 ## ✨ Live Demo
 
-Check out the live app: [MindTrack AI]([https://mindtrack-ai-ig9po7dhptw4rs4dcwcq9p.streamlit.app/))
-
-## 📸 Screenshots
-
-| Dashboard | Journal | Analytics |
-|-----------|---------|-----------|
-| ![Dashboard](https://placehold.co/600x400/8b5cf6/white?text=Dashboard) | ![Journal](https://placehold.co/600x400/10a37f/white?text=Journal) | ![Analytics](https://placehold.co/600x400/8b5cf6/white?text=Analytics) |
+Check out the live app:http://localhost:8501/
 
 ## 🎯 Features
 
