@@ -1,0 +1,1 @@
+def mood(x): return 'positive'
